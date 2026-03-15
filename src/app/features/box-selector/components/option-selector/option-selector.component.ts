@@ -1,14 +1,10 @@
 import {
   Component,
   inject,
-  computed,
-  signal,
-  effect,
   ChangeDetectionStrategy,
 } from '@angular/core';
 import { SaltosService } from '../../services/saltos/saltos.service';
 import { Salto } from '../../models/salto';
-import { SaltoGroup } from '../../models/saltogroup';
 import { StorageSignalStore } from '../../store/storage/storage.store';
 
 @Component({
@@ -18,9 +14,8 @@ import { StorageSignalStore } from '../../store/storage/storage.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OptionSelectorComponent {
-  // ==================== Inject Services ====================
   private readonly saltosService = inject(SaltosService);
-  private readonly store = inject(StorageSignalStore); // reactive SignalStore
+  private readonly store = inject(StorageSignalStore);
 
   readonly totalSaltos = this.store.totalSaltos;
   readonly selectedBox = this.store.selectedBox;

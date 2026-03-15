@@ -10,7 +10,6 @@ export class BoxService {
   private readonly http = inject(HttpClient);
 
   // Fetches all boxes from the backend API
-
   fetchBoxes(): Observable<Box[]> {
     return this.http.get<Box[]>('/boxes.json');
   }

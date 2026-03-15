@@ -8,7 +8,6 @@ import { firstValueFrom } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 export const storageMethods = (store: any) => {
-  // Inject LocalStorageService to persist state in the browser localStorage
   const localStorage = inject(LocalStorageService);
   const httpClint = inject(HttpClient);
   return {
@@ -17,7 +16,6 @@ export const storageMethods = (store: any) => {
     // Replaces the entire boxes collection
     // Also persists the updated boxes list to localStorage
     setBoxes(boxes: Box[]) {
-      // Save boxes in localStorage for persistence across page reloads
       localStorage.setLocalStorage('boxes', JSON.stringify(boxes));
 
       // Update the store state
@@ -58,22 +56,8 @@ export const storageMethods = (store: any) => {
     },
 
     // Initializes boxes data
-    // Uses cached data from localStorage if available
-    // Otherwise fetches from API
-
     initBoxes() {
-      const storedBoxes = localStorage.getLocalStorage('boxes');
-      if (storedBoxes) {
-        const parsedBoxes: Box[] = JSON.parse(storedBoxes);
-        this.setBoxes(parsedBoxes);
-
-        const storedTotal = localStorage.getLocalStorage('total');
-        if (storedTotal) {
-          this.setTotalSaltos(JSON.parse(storedTotal));
-        }
-
-        this.setSelectedBox(null);
-      } else {
+      if (!store.boxes().length) {
         this.loadBoxesFromApi();
       }
     },
@@ -164,7 +148,6 @@ export const storageMethods = (store: any) => {
 
     // Automatically selects the next box in the list after a selection.
     // If the current box is the last one, clears the selection.
-
     selectNextBox(currentBox: Box): void {
       const boxes = store.boxes();
       const currentIndex = boxes.findIndex((b: Box) => b.id === currentBox.id);
