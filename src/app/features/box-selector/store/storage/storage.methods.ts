@@ -39,7 +39,6 @@ export const storageMethods = (store: any) => {
 
       // Persist updated boxes in localStorage
       localStorage.setLocalStorage('boxes', JSON.stringify(updated));
-
       // Update the store state
       patchState(store, { boxes: updated });
     },
@@ -64,7 +63,6 @@ export const storageMethods = (store: any) => {
 
     initBoxes() {
       const storedBoxes = localStorage.getLocalStorage('boxes');
-
       if (storedBoxes) {
         const parsedBoxes: Box[] = JSON.parse(storedBoxes);
         this.setBoxes(parsedBoxes);
@@ -134,6 +132,7 @@ export const storageMethods = (store: any) => {
         .boxes()
         .map((b: Box) => (b.id === box.id ? { ...b, saltoId: salto.id, saltoType: type } : b));
       patchState(store, { boxes: updatedBoxes });
+      localStorage.setLocalStorage('boxes', JSON.stringify(updatedBoxes));
       const previousSelection = store.selectedSaltoOption();
       this.recalculateTotalSaltos(salto, previousSelection);
       const total = store.totalSaltos();
