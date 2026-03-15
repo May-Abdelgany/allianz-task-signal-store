@@ -1,0 +1,7 @@
+<div
+  class="max-w-6xl mx-auto grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 gap-6 mb-12"
+>
+  @for (box of boxes(); track $index) {
+    <app-box [boxId]="box.id"></app-box>
+  }
+</div>
